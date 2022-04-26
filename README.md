@@ -1,5 +1,5 @@
 # dap2-tudo
-private repo for dap 2 praktikum at tudortmund
+ repo for dap 2 praktikum at tudortmund
 
 
 

@@ -1,0 +1,19 @@
+2^22 = 4194304
+
+javac Quicksort.java && seq 4194304 | shuf | java Quicksort
+Single-QS:
+795
+779
+781
+761
+757
+Durchschnitt = 774.6ms
+
+javac Quicksort2.java && seq 4194304 | shuf | java -ea Quicksort2
+Dual-QS:
+772
+733
+778
+840
+838
+Durchschnitt = 792.2ms

@@ -1,5 +1,6 @@
 {
     "java.project.sourcePaths": [
-        "blatt1"
+        "blatt01",
+        "blatt02"
     ]
 }

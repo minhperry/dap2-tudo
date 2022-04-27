@@ -20,7 +20,9 @@ public class EnumeratePermutations {
     static int rechenschritte = 0;
 
     public static int printPermutations(int[] array, int d) {
-
+        if (array.length == 0)
+// print []
+            return 1;
         // Die Elementen vom d-ten bis zum letzten Index wurde noch nicht permutiert
         // Starte mit dem ersten Element (d = 0 unten) und tausche mit jedem Element
         // im Array. Das erste Element wird nun als "permutiert" betrachtet.
@@ -62,7 +64,7 @@ public class EnumeratePermutations {
         }
         // Ende der Importierung
 
-        System.out.println(printPermutations(ints, 0));
+        System.out.println("Es gibt " + printPermutations(ints, 0) + " Permutation(en) der Eingabe.");
 
     }
 }

@@ -60,6 +60,11 @@ public class Select {
             System.out.println(
                     "List must contain k=" + k + " numbers, but only " + eingabeInt.length + " were provided.");
             return;
+        } else if (k == 0) {
+            System.out.println("0th element does not exist.");
+        }
+        else if (k < 0) {
+            System.out.println(k + "-th element does not exist.");
         }
         // Das k-te kleinste Element hat den Index k-1
         else {

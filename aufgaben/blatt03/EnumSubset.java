@@ -51,25 +51,25 @@ public class EnumSubset {
 
     /*
         data    Eingabearray
-        combi  Temporäre Array zum Speichern von diezeitigen Kombination
+        combi   Temporäre Array zum Speichern von diezeitigen Kombination
         s, e    Anfangs- und Endindex im Eingabearray
         idx     Derseitige Index im temporären Array
-        size    Größe der Kombination       
     */
-    public static void combination(int[] data, int[] combi, int s, int e, int idx, int size) {
+    public static void combination(int[] data, int[] combi, int s, int e, int idx) {
         // Eine Kombination ist schon fertig und kann ausgedrückt werden
-        if (idx == size) {
+        if (idx == combi.length) {
             System.out.println(Arrays.toString(combi));
             amountCombis++;
             return;
         }
-
-        for (int i = s; i <= e && e - i + 1 >= size - idx; i++) {
+        // combi.length - idx => leeres Teil im temp. Array das noch füllen muss
+        // e - i + 1 => nicht gescanntes Teil im data-Array
+        for (int i = s; i <= e && e - i + 1 >= combi.length - idx; i++) {
             // combi-Array mit allen möglichen Elementen füllen
             combi[idx] = data[i];
             // Bei jeder Rekursion werden die nichtgefüllten Elementen in
             // combi-Array ausgefüllt, bis das Array voll ist.
-            combination(data, combi, i + 1, e, idx + 1, size);
+            combination(data, combi, i + 1, e, idx + 1);
         }
     }
 
@@ -109,7 +109,7 @@ public class EnumSubset {
 
         // temp. Array für combination()
         int[] temp = new int[k];
-        combination(zahlenNoDupe, temp, 0, zahlenNoDupe.length - 1, 0, k);
+        combination(zahlenNoDupe, temp, 0, zahlenNoDupe.length - 1, 0);
 
         if (k > zahlenNoDupe.length) {
             System.out.println("k is too large.");

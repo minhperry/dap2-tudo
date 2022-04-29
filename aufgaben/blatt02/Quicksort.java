@@ -56,12 +56,9 @@ public class Quicksort {
     }
 
     // c
-    // qsort(int[]) gibt die Laufzeit zurück
-    public static long qsort(int[] data) {
-        Instant start = Instant.now();
+
+    public static void qsort(int[] data) {
         qsort(data, 0, data.length - 1);
-        Instant end = Instant.now();
-        return Duration.between(start, end).toMillis();
     }
 
     // d

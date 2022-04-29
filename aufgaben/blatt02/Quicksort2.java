@@ -11,10 +11,6 @@ public class Quicksort2 {
         arr[index2] = temp;
     }
 
-    public static void show(int[] arr) {
-        System.out.println(Arrays.toString(arr));
-    }
-
     public static int[] partition(int[] data, int l, int r) {
         // falls lPivot < rPivot dann tauschen wir diese,
         // da wir die Zahlen absteigend sortieren möchten.
@@ -27,11 +23,11 @@ public class Quicksort2 {
         // und speichert die richtige Position des Pivots.
         int rZ = r - 1, lZ = l + 1;
         // 3. Zeiger i zum Iterieren durch das Array
-        // i ist einfach nur die linksseitige Zeiger wie rZ, 
-        // aber rZ speichert noch das notwendige Index
+        // i ist einfach nur die linksseitige Zeiger wie lZ, 
+        // aber lZ speichert noch das notwendige Index
         int i = l + 1;
         // läuft bis die rechts- und linksseitige Zeiger sich überschreiten
-        // in jede Schleife werden Zahlen, die grö0er als die linksseitige Pivot sind,
+        // in jede Schleife werden Zahlen, die größer als die linksseitige Pivot sind,
         // zur linken Seite gebracht, und Zahlen, die kleiner als die rechtsseitige 
         // Pivot sind, zur rechten Seite gebracht. Zahlen, deren Werte zwische die Pivots 
         // liegt, erfüllt die Bedingugen nicht und bleibt einfach da.
@@ -66,11 +62,12 @@ public class Quicksort2 {
         }
     }
 
-    // qsort(int[]) gibt die Laufzeit zurück
     public static void qsort(int[] data) {
         qsort(data, 0, data.length - 1);
     }
 
+
+    // 2.3
     public static boolean isSorted(int[] data) {
         int sorted = 1; // 1 = true, 0 = false
         for (int i = 0; i < data.length - 1; i++) {

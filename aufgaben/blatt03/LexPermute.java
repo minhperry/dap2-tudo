@@ -25,7 +25,8 @@ public class LexPermute {
         // Arrays.sort(data);
         // im main() wird das Array schon sortiert
 
-        // Wir nutzen das 0-Indexing, deshalb ist die k-kleinste Permutation 
+        // Wir nutzen das 0-Indexing, deshalb hat die k-kleinste Permutation 
+        // das Index k - 1
         k = k - 1;
 
         // Berechne fact = (n-1)! für spätere Nutzungen wie im Tipp
@@ -34,6 +35,7 @@ public class LexPermute {
             fact = fact * i;
         }
 
+        // k > n! -> k-te Perm. exisitiert nicht
         if (k + 1 > fact * n) {
             throw new NumberFormatException("k is bigger than the amount of permutations!");
         }
@@ -48,8 +50,8 @@ public class LexPermute {
             // -> (int) i = (int) (k - 1) / (int) fact
             // z.B. 8 / 3 = 2.(6). 
             // floor() nimmt die nächste kleinere ganze Zahl = 2
-            // int = int / int entfernt einfact den Dezimalteil = 2
-            // Die (i+1)-te Zahl (mit 0-Indexing i-te aka. a_i) wird in dem Array gespeichert...
+            // int = int / int entfernt einfach den Dezimalteil = 2
+            // Die Zahl a_i wird in dem Array gespeichert...
             arr[j++] = data[k / fact];
             // ... und dann von dem Originalarray entfernt an den i-te Index.
             data = removeAndShrink(data, k / fact);
@@ -67,7 +69,7 @@ public class LexPermute {
 
             // Verkleinerung des Problems für die restlichen ELemente
             k = k % fact;
-            fact = fact / data.length; // (n-1)! -> (n-2)!
+            fact = fact / data.length; // (n-1)! -> (n-2)! -> (n-3)! -> ...
         }
         return arr;
     }

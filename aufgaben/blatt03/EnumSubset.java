@@ -107,15 +107,21 @@ public class EnumSubset {
         System.out.println("Before removing duplicates: " + originalOrder);
         System.out.println("After removing duplicates: " + Arrays.toString(zahlenNoDupe));
 
+        if (k > zahlenNoDupe.length) {
+            System.out.println("k is too large.");
+            return;
+        } 
+        if (k < 0) {
+            System.out.println("k is too small.");
+            return;
+        }
+
         // temp. Array für combination()
         int[] temp = new int[k];
         combination(zahlenNoDupe, temp, 0, zahlenNoDupe.length - 1, 0);
 
-        if (k > zahlenNoDupe.length) {
-            System.out.println("k is too large.");
-        } else {
-            System.out.println("There are " + amountCombis + " subset(s).");
-        }
+        System.out.println("There are " + amountCombis + " subset(s).");
+        
     }
 
 }

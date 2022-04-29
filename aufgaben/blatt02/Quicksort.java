@@ -61,6 +61,20 @@ public class Quicksort {
         qsort(data, 0, data.length - 1);
     }
 
+    // 2.3
+    public static boolean isSorted(int[] data) {
+        int sorted = 1; // 1 = true, 0 = false
+        for (int i = 0; i < data.length - 1; i++) {
+            // Wenn es nur ein Element gibt, welches folgende Element größer ist,
+            // bedeutet es dass das Array unsortiert ist. Sonst ist die if-Bedingung
+            // immer falsch und die sorted Variable immer noch 1, d.h. das Array is sortiert.
+            if (data[i] < data[i + 1]) {
+                sorted *= 0;
+            }
+        }
+        return (sorted == 1) ? true : false;
+    }
+
     // d
 
     public static void main(String[] args) {
@@ -81,6 +95,8 @@ public class Quicksort {
         for (int i = 0; i < zahlen.length; i++) {
             zahlen[i] = eingabe.get(i).intValue();
         }
+
+        assert (!isSorted(zahlen)) : "Array was not sorted correctly";
 
         int laenge = zahlen.length;
 

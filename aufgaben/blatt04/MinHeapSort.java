@@ -5,49 +5,10 @@ import java.time.Instant;
 import java.time.Duration;
 
 public class MinHeapSort {
-    public static void main(String[] args) {
-        
-        // Eingabe lesen und checken
-        Scanner input = new Scanner(System.in);
-        int k = Integer.parseInt(args[0]);
-        ArrayList<Integer> list = new ArrayList<Integer>();
-        String line = "";
-        while (input.hasNextLine()) {
-            try {
-                line = input.nextLine();
-                if (line.equals("")) break;
-                int value = Integer.parseInt(line);
-                list.add(value);
-            } catch (NumberFormatException e) {
-                System.err.println("Invalid Input");
-            }
-        }
-        
-        // ArrayList in int[] umwandeln
-        int kth = 0;
-        int[] array = new int[list.size()];
-        for (int i = 0; i < array.length; i++) {
-            array[i] = list.get(i);
-        }
-        
-        // array1 für Laufzeitsmessung und array2 zum Prüfen von Assertion
-        int[] array1 = array.clone();
-        int[] array2 = array.clone();
-        
-        Instant start1 = Instant.now();
-        kth = heapSelect(array1, k);
-        Instant finish1 = Instant.now();
-        long time1 = Duration.between(start1, finish1).toMillis();
-        
-        System.out.println("Time: " + time1);
-        assert assertion(array2,k) == kth : "Es gibt einen Fehler";
-
-    }
-
     static void minHeapify(int arr[], int n, int i) {
-        int smallest = i; // Initialisiere smallest als Wurzel
-        int l = 2 * i + 1; // Index von LinksKinderKnoten = 2*i + 1
-        int r = 2 * i + 2; // Index von RechtsKinderKnoten = 2*i + 2
+        int smallest = i; 
+        int l = 2 * i + 1; 
+        int r = 2 * i + 2;
 
         // Wenn LinksKinderKnoten kleiner als Wurzel ist
         if (l < n && arr[l] < arr[smallest])
@@ -103,6 +64,63 @@ public class MinHeapSort {
     public static int assertion(int[] data, int k){
         Arrays.sort(data);
         return data[k-1];
+    }
+
+    public static void main(String[] args) {
+        
+        // Eingabe lesen und checken
+        Scanner sc = new Scanner(System.in);
+        ArrayList<Integer> list = new ArrayList<>();
+        while (sc.hasNextLine()) {
+            try {
+                int val = Integer.parseInt(sc.nextLine());
+                list.add(val);
+            } catch (NumberFormatException e) {
+                System.out.println("Input is not a number!");
+                return;
+            }
+        }
+
+        // ArrayList in int[] umwandeln
+        int kth = 0;
+        int[] array = new int[list.size()];
+        for (int i = 0; i < array.length; i++) {
+            array[i] = list.get(i);
+        }
+
+        int k = 0;
+        try {
+            k = Integer.parseInt(args[0]);
+        } catch (Exception e) {
+            System.out.println("Input k is not a number!");
+            return;
+        }
+
+        if (k <= 0) {
+            System.out.println("Negative or 0-th element does not exist! Please start from 1.");
+            return;
+        }
+
+        if (k > array.length) {
+            System.out.println("k is too big!");
+            return;
+        }
+        
+        
+        // array1 für Laufzeitsmessung und array2 zum Prüfen von Assertion
+        int[] array1 = array.clone();
+        int[] array2 = array.clone();
+        
+        Instant start1 = Instant.now();
+        kth = heapSelect(array1, k);
+        Instant finish1 = Instant.now();
+        long time1 = Duration.between(start1, finish1).toMillis();
+
+        System.out.println(k + "th-smallest element is " + kth);
+
+        System.out.println("Time: " + time1);
+        assert assertion(array2,k) == kth : "Es gibt einen Fehler";
+
     }
 
 }

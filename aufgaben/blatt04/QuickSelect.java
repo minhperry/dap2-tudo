@@ -9,53 +9,78 @@ public class QuickSelect {
     public static void main(String[] args) {
         
         // Eingabe lesen und checken
-        Scanner input = new Scanner(System.in);
-        int k = Integer.parseInt(args[0]);
-        String wort = args[1];
-        ArrayList<Integer> list = new ArrayList<Integer>();
-        String line = "";
-        while (input.hasNextLine()) {
+        
+        Scanner sc = new Scanner(System.in);
+        ArrayList<Integer> list = new ArrayList<>();
+        while (sc.hasNextLine()) {
             try {
-                line = input.nextLine();
-                if (line.equals("")) break;
-                int value = Integer.parseInt(line);
-                list.add(value);
+                int val = Integer.parseInt(sc.nextLine());
+                list.add(val);
             } catch (NumberFormatException e) {
-                System.err.println("Invalid Input");
+                System.out.println("Input is not a number!");
+                return;
             }
         }
-        
+
         // ArrayList -> int[]
         int[] array = new int[list.size()];
         for (int i = 0; i < array.length; i++) {
             array[i] = list.get(i);
         }
+
+        int k = 0;
+        try {
+            k = Integer.parseInt(args[0]);
+        } catch (NumberFormatException e) {
+            System.out.println("Input k is not a number!");
+            return;
+        }
+
+        String wort = args[1];
+
         int[] array1 = array.clone();
         int[] array2 = array.clone();
         int[] array3 = array.clone();
         int[] array4 = array.clone();
+        int[] array5 = array.clone();
         
-        if (wort == "heap" || wort == "quickr" || wort == "quickf") {
-            if (wort == "quickr") {
-                
+       
+            if (wort.equals("quickr")) {          
                 Instant start1 = Instant.now();
                 int kth1 = quickSelectRand(array1, 0, array1.length-1, k-1);
                 Instant finish1 = Instant.now();
                 long time1 = Duration.between(start1, finish1).toMillis();
                 
+                System.out.println(k + "th-smallest element is " + kth1);
+
                 System.out.println("TimeQuickr: " + time1);
                 assert assertion(array2,k) == kth1 : "Es gibt einen Fehler";
-            } else if(wort == "quickf"){
-                
+
+            } else if(wort.equals("quickf")){                
                 Instant start2 = Instant.now();
                 int kth2 = quickSelectFirst(array3, 0, array1.length-1, k-1);
                 Instant finish2 = Instant.now();
                 long time2 = Duration.between(start2, finish2).toMillis();
+
+                System.out.println(k + "th-smallest element is " + kth2);
                 
                 System.out.println("TimeQuickf: " + time2);
                 assert assertion(array4,k) == kth2 : "Es gibt einen Fehler";
+
             }
-        }
+            else if (wort.equals("heap")) {
+                Instant start3 = Instant.now();
+                int kth3 = heapSelect(array5, k);
+                Instant finish3 = Instant.now();
+                long time3 = Duration.between(start3, finish3).toMillis();
+
+                System.out.println(k + "th-smallest element is " + kth3);
+
+                System.out.println("TimeHeap: " + time3);
+                assert assertion(array5,k) == kth3 : "Es gibt einen Fehler";
+            } else {
+                System.out.println("Input string does not match anything.");
+            }
     }
     
     // Hilfsmethode zum Wählen von einer zufälligen Nummer zwischen min und max
@@ -113,7 +138,7 @@ public class QuickSelect {
 
         // Pivot p = l wählen
         // Nach die Partionierung steht das Pivot an der richtigen Position
-        int p = data[l];
+        int p = l;
         p = partition(data, l, p, r);
 
         // Falls diese die gesuchte Position ist dann geben wir die p- bzw. k-kleinste Element zurück
@@ -153,6 +178,65 @@ public class QuickSelect {
             return quickSelectRand(data, p + 1, r, k);
         }
     }
+
+    // Start Min-Heap-Methode
+    static void minHeapify(int arr[], int n, int i) {
+        int smallest = i; 
+        int l = 2 * i + 1; 
+        int r = 2 * i + 2;
+
+        // Wenn LinksKinderKnoten kleiner als Wurzel ist
+        if (l < n && arr[l] < arr[smallest])
+            smallest = l;
+
+        // Wenn RechtsKinderKnoten kleiner als Wurzel ist
+        if (r < n && arr[r] < arr[smallest])
+            smallest = r;
+
+        // Wenn smallest kein Wurzel ist
+        if (smallest != i) {
+            int temp = arr[i];
+            arr[i] = arr[smallest];
+            arr[smallest] = temp;
+
+            // Recursiv minHeapify aufrufen
+            minHeapify(arr, n, smallest);
+        }
+    }
+
+    static void buildMinHeap(int arr[], int n) {
+        // Min-Heap erstellen
+        for (int i = n / 2 - 1; i >= 0; i--)
+            minHeapify(arr, n, i);
+    }
+
+    public static int extractMin(int[] data, int n) {
+        // Der Wurzel zum Ende bringen
+        int temp = data[0];
+        data[0] = data[n - 1];
+        data[n - 1] = temp;
+
+        
+        // minHeapify auf das reduzierte Heap
+        minHeapify(data, n-1, 0);
+
+
+        return temp;
+    }
+
+    public static int heapSelect(int [] data, int k) {
+        // Zuerst ein Min-Heap bauen
+        buildMinHeap(data,data.length);
+        int kth = 0;
+        // Für jede Schleife nehmen wir das kleinste Element
+        // -> für die k-te Schleife wird das k-kleinste Element ausgewählt
+        for(int i = 0; i < k; i++) {
+            kth = extractMin(data, data.length-i);
+        }
+        return kth;
+    }
+    // End Min-Heap-Methode
+
 
     public static int assertion(int[] data, int k){
         Arrays.sort(data);

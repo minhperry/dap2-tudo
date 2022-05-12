@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class CountingSort {
+
     public static void main(String[] args) {
 
         // Eingabe lesen und checken
@@ -23,60 +24,53 @@ public class CountingSort {
         for (int i = 0; i < array.length; i++) {
             array[i] = list.get(i);
         }
-        int[] array1 = array;
-        int max = getMax(array);
-        int min = getMin(array);
-        int[] count = count(array, min, max);
-        System.out.println("The minimum value:" + min);
-        System.out.println("The maximum value:" + max);
-        System.out.println("Before Sorting:" + Arrays.toString(array1));
-        System.out.println("After Sorting:" + Arrays.toString(countingSort(array)));
-        System.out.println(Arrays.toString(count));
-    }
-    public static int getMin(int[] data){
-        int min = data[0];
-        for( int i : data ){
-            if( i < min ){
-                min = i;
-            }
+
+        int max, min;
+
+        try {
+            max = Counting.getMax(array);
+            min = Counting.getMin(array);
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            System.out.println("Array is empty! Min and Max does not exist!");
+            return;
         }
-        return min;
+
+        int[] count = Counting.count(array, min, max);
+        System.out.println("The minimum value: " + min);
+        System.out.println("The maximum value: " + max);
+        System.out.println("Before Sorting: " + Arrays.toString(array));
+        System.out.println("After Sorting: " + Arrays.toString(countingSort(array)));
+
+        System.out.println("Frequencies: " + Arrays.toString(count));
     }
-    public static int getMax(int[] data){
-        int max = data[0];
-        for( int i : data ){
-            if( i > max ){
-                max = i;
-            }
-        }
-        return max;
-    }
-    public static int[] count(int[] data, int min, int max){
-        int[] C = new int[max - min + 1];
-        for(int i : data){
-            C[i-min]++;
-        }
-        return C;
-    }
+
     public static int[] countingSort(int[] data) {
-        int max = getMax(data);
-        int min = getMin(data);
-        int[] count = count(data, min, max);
-        /** calculate sum of indexes **/
-        for (int i = 1; i < count.length; i++)
+        // min, max und Frequenzarray generieren
+        int max = Counting.getMax(data);
+        int min = Counting.getMin(data);
+        int[] count = Counting.count(data, min, max);
+
+        // kumulative Summe der Frequenzen in dem selben Array speichern
+        for (int i = 1; i < count.length; i++) {
             count[i] += count[i - 1];
-        /** modify original array according to the sum count **/
+        }
+
+        // https://i.imgur.com/iZeJKod.png
+        // j iteriert das Array vom Anfang, da wir absteigend sortieren möchten.
         int j = 0;
-        int length = data.length-1;
+        // length iteriert das Array vom Ende, und notiert, wie weit wir das Originalarray überschrieben haben.
+        int length = data.length - 1;
+        // 
         for (int i = 0; i < count.length; i++) {
+            // ????
             while (j < count[i]) {
                 data[length] = i + min;
-                if(length == 0) break;
+                if (length == 0)
+                    break;
                 length--;
                 j++;
             }
         }
         return data;
     }
-
 }

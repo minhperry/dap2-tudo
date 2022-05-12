@@ -1,40 +1,8 @@
+import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Scanner;
 
 public class Counting {
-
-    // Setze die max als kleinstmöglicher Wert.
-    // Für jedes Element, falls es größer als daszeitiges Max ist, wird es das neue Max
-    static int getMax(int[] data) {
-        int max = Integer.MIN_VALUE;
-        for (int i : data) {
-            if (i > max) {
-                max = i;
-            }
-        }
-        return max;
-    }
-
-    // gleiche Konzept wie getMax
-    static int getMin(int[] data) {
-        int min = Integer.MAX_VALUE;
-        for (int i : data) {
-            if (i < min) {
-                min = i;
-            }
-        }
-        return min;
-    }
-
-    static int[] count(int[] data, int min, int max) {
-        int[] freq = new int[max - min + 1];
-        for (int elm : data) {
-            freq[elm - min]++;
-        }
-        return freq;
-    }
-
     public static void main(String[] args) {
 
         // Eingabe lesen und checken
@@ -51,13 +19,67 @@ public class Counting {
         }
 
         // ArrayList in int[] umwandeln
-        int[] zahlen = new int[list.size()];
-        for (int i = 0; i < zahlen.length; i++) {
-            zahlen[i] = list.get(i);
+        int[] array = new int[list.size()];
+        for (int i = 0; i < array.length; i++) {
+            array[i] = list.get(i);
         }
 
-        System.out.println("The minimum value: " + getMin(zahlen));
-        System.out.println("The maximum value: " + getMax(zahlen));
-        System.out.println("Frequencies: " + Arrays.toString(count(zahlen, getMin(zahlen), getMax(zahlen))));
+        // leeres Array fangen und das Programm dann enden
+        int min, max;
+        try {
+            max = getMax(array);
+            min = getMin(array);
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            System.out.println("Array is empty! Min and Max does not exist!");
+            return;
+        }
+
+        // sonst wenn das Array nicht leer ist, Min, Max und Frequezen ausdrücken
+        int[] count = count(array, min, max);
+        System.out.println("The minimum value: " + min);
+        System.out.println("The maximum value: " + max);
+        System.out.println("Frequencies: " + Arrays.toString(count));
+    }
+
+    public static int getMin(int[] data) {
+        // Falls das Array Länge 0 hat, existiert kein Minimum
+        if (data.length == 0) {
+            throw new ArrayIndexOutOfBoundsException("Array is empty! Cannot find smallest element!");
+        } else {
+            // Setze die min als erstes Element des Arrays
+            // Für jedes Element, falls es kleiner als daszeitiges Min ist, wird es das neue Min
+            int min = data[0];
+            for (int i : data) {
+                if (i < min) {
+                    min = i;
+                }
+            }
+            return min;
+        }
+    }
+
+    // gleiches Konzept wie getMin()
+    public static int getMax(int[] data) {
+        if (data.length == 0) {
+            throw new ArrayIndexOutOfBoundsException("Array is empty! Cannot find largest element!");
+        } else {
+            int max = data[0];
+            for (int i : data) {
+                if (i > max) {
+                    max = i;
+                }
+            }
+            return max;
+        }
+    }
+
+    // Index i - min von Array freq speichert den Frequenz eines Elements
+    // min = k -> Frequenz von k wird im Index k - k = 0 gespeichert, k+1 im Index k+1 - k = 1, etc.
+    public static int[] count(int[] data, int min, int max) {
+        int[] freq = new int[max - min + 1];
+        for (int i : data) {
+            freq[i - min]++;
+        }
+        return freq;
     }
 }

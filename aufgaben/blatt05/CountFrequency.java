@@ -28,7 +28,7 @@ public class CountFrequency {
         int[] count = count(array, min, max);
         System.out.println("The minimum value:" + min);
         System.out.println("The maximum value:" + max);
-        System.out.println(Arrays.toString(count));
+        System.out.println("Frequencies:" + Arrays.toString(count));
     }
     public static int getMin(int[] data){
         int min = data[0];

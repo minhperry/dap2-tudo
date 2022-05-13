@@ -36,7 +36,14 @@ public class QuickSelect {
             return;
         }
 
-        String wort = args[1];
+        String wort;
+
+        try {
+             wort = args[1];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Word is missing!");
+            return;
+        }
 
         int[] array1 = array.clone();
         int[] array2 = array.clone();
@@ -70,7 +77,7 @@ public class QuickSelect {
             }
             else if (wort.equals("heap")) {
                 Instant start3 = Instant.now();
-                int kth3 = heapSelect(array5, k);
+                int kth3 = MinHeapSort.heapSelect(array5, k);
                 Instant finish3 = Instant.now();
                 long time3 = Duration.between(start3, finish3).toMillis();
 
@@ -109,7 +116,7 @@ public class QuickSelect {
         // Pivot zum Ende bringen
         swap(data, p, r);
        
-        // ?
+        // Pivot als das erste Element
         p = l;
 
         // Das Array von links nach rechts iterieren. 
@@ -178,65 +185,6 @@ public class QuickSelect {
             return quickSelectRand(data, p + 1, r, k);
         }
     }
-
-    // Start Min-Heap-Methode
-    static void minHeapify(int arr[], int n, int i) {
-        int smallest = i; 
-        int l = 2 * i + 1; 
-        int r = 2 * i + 2;
-
-        // Wenn LinksKinderKnoten kleiner als Wurzel ist
-        if (l < n && arr[l] < arr[smallest])
-            smallest = l;
-
-        // Wenn RechtsKinderKnoten kleiner als Wurzel ist
-        if (r < n && arr[r] < arr[smallest])
-            smallest = r;
-
-        // Wenn smallest kein Wurzel ist
-        if (smallest != i) {
-            int temp = arr[i];
-            arr[i] = arr[smallest];
-            arr[smallest] = temp;
-
-            // Recursiv minHeapify aufrufen
-            minHeapify(arr, n, smallest);
-        }
-    }
-
-    static void buildMinHeap(int arr[], int n) {
-        // Min-Heap erstellen
-        for (int i = n / 2 - 1; i >= 0; i--)
-            minHeapify(arr, n, i);
-    }
-
-    public static int extractMin(int[] data, int n) {
-        // Der Wurzel zum Ende bringen
-        int temp = data[0];
-        data[0] = data[n - 1];
-        data[n - 1] = temp;
-
-        
-        // minHeapify auf das reduzierte Heap
-        minHeapify(data, n-1, 0);
-
-
-        return temp;
-    }
-
-    public static int heapSelect(int [] data, int k) {
-        // Zuerst ein Min-Heap bauen
-        buildMinHeap(data,data.length);
-        int kth = 0;
-        // Für jede Schleife nehmen wir das kleinste Element
-        // -> für die k-te Schleife wird das k-kleinste Element ausgewählt
-        for(int i = 0; i < k; i++) {
-            kth = extractMin(data, data.length-i);
-        }
-        return kth;
-    }
-    // End Min-Heap-Methode
-
 
     public static int assertion(int[] data, int k){
         Arrays.sort(data);

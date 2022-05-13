@@ -55,14 +55,14 @@ public class CountingSort {
             count[i] += count[i - 1];
         }
 
-        // https://i.imgur.com/iZeJKod.png
-        // j iteriert das Array vom Anfang, da wir absteigend sortieren möchten.
+        // j ist die Frequenzanzahl des count-Arrays.
         int j = 0;
-        // length iteriert das Array vom Ende, und notiert, wie weit wir das Originalarray überschrieben haben.
+        // length iteriert das Array vom Ende, und notiert, wie weit wir das Array noch gefüllt hat
         int length = data.length - 1;
-        // 
+        // für jeden Frequenz im count-Array ...
         for (int i = 0; i < count.length; i++) {
-            // ????
+            // ... falls j kleiner als die Anzahl der Vorkommen jeder Zahl ist,
+            // füllen wir vom Ende ab
             while (j < count[i]) {
                 data[length] = i + min;
                 if (length == 0)

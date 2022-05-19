@@ -2,7 +2,7 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class SortByByte {
+public class SortByByte_old {
     public static void main(String[] args) {
 
         // Eingabe lesen und checken
@@ -71,7 +71,7 @@ public class SortByByte {
         }
 
         // Kummulative Summe berechnen
-        for (int i = count.length - 2; i >= 0; i--) {
+        for (int i = count.length - 1; i > 0; i--) {
             count[i] += count[i + 1];
         }
 

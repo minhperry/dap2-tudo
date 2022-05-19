@@ -26,5 +26,7 @@ lst2 = [
 # python3 numbergen.py > numbers.txt -> tạo số
 # javac SortByByte.java && (cat numbers.txt | java -ea SortByByte)
 
+# https://algs4.cs.princeton.edu/51radix/MSD.java.html
+
 for num in lst2:
     print(generate(num))

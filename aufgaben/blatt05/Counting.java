@@ -74,7 +74,7 @@ public class Counting {
     }
 
     // Index i - min von Array freq speichert den Frequenz eines Elements
-    // min = k -> Frequenz von k wird im Index k - k = 0 gespeichert, k+1 im Index k+1 - k = 1, etc.
+    // z.B. min = k -> Frequenz von k wird im Index k - k = 0 gespeichert, k+1 im Index k+1 - k = 1, etc.
     public static int[] count(int[] data, int min, int max) {
         int[] freq = new int[max - min + 1];
         for (int i : data) {

@@ -5,7 +5,7 @@ import java.time.Instant;
 import java.time.Duration;
 
 public class MinHeapSort {
-    static void minHeapify(int arr[], int n, int i) {
+    static void minHeapify(int[] arr, int n, int i) {
         int smallest = i; 
         int l = 2 * i + 1; 
         int r = 2 * i + 2;
@@ -24,19 +24,19 @@ public class MinHeapSort {
             arr[i] = arr[smallest];
             arr[smallest] = temp;
 
-            // Recursiv minHeapify aufrufen
+            // Rekursiv minHeapify aufrufen
             minHeapify(arr, n, smallest);
         }
     }
 
-    static void buildMinHeap(int arr[], int n) {
+    static void buildMinHeap(int[] arr, int n) {
         // Min-Heap erstellen
         for (int i = n / 2 - 1; i >= 0; i--)
             minHeapify(arr, n, i);
     }
 
     public static int extractMin(int[] data, int n) {
-        // Der Wurzel zum Ende bringen
+        // Der Wurzel mit dem Knoten am Ende tauschen
         int temp = data[0];
         data[0] = data[n - 1];
         data[n - 1] = temp;
@@ -49,7 +49,7 @@ public class MinHeapSort {
         return temp;
     }
 
-    public static int heapSelect(int [] data, int k) {
+    public static int heapSelect(int[] data, int k) {
         // Zuerst ein Min-Heap bauen
         buildMinHeap(data,data.length);
         int kth = 0;

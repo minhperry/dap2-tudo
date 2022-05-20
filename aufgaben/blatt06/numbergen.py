@@ -1,4 +1,4 @@
-import random
+import random as r
 
 
 def generate(l: list):
@@ -7,7 +7,7 @@ def generate(l: list):
 
 def shufgen(l: list, shuf: bool):
     if shuf == True:
-        random.shuffle(l)
+        r.shuffle(l)
     for num in l:
         print(generate(num))
 
@@ -23,25 +23,43 @@ lst = [
     [1, 1, 2, 3]
 ]
 
+
 lst2 = [
-    [0, 0, 1, 1],
-    [0, 0, 1, 2]
+    [127, 255, 255, 255],
+    [128, 0, 0, 0]
 ]
 
 # limit: i <= 127
-lst3 = [[i, i+1, i+2, i+3] for i in range(126, 130)]
+lst3 = [[i, int(i/2), 2*i+2, int(i/3)-3] for i in range(30, 100)]
 
 # limit: i < 64 (4i < 256)
-lst4 = [[i, 2*i, 3*i, 4*i] for i in range(44, 55)]
+lst4 = [[i, 2*i, 3*i, 4*i] for i in range(0, 60)]
 
 # limit: i <= 127
-lst5 = [[i, int(i/2), int(i/3), int(i/4)]for i in range(60, 100)]
+lst5 = [[i, int(i/2), int(i/3), int(i/4)] for i in range(60, 100)]
 
 # -> first byte should always be smaller than 128
 # else Long data is needed
 
+lst6 = []
 
-# chạy file:
-# python3 numbergen.py > numbers.txt -> tạo số
+lst7 = [[r.randint(0, 127), r.randint(0, 255), r.randint(0, 255), r.randint(0, 255)] for _ in range(0, 40)]
 
-shufgen(lst5, False)
+# generate (shuffled) list
+# python3 numbergen.py > numbers.txt
+
+shufgen(lst7, True)
+
+
+
+# for i in {1..5}; do (seq 1000000 10000 10000000 | shuf | java *SDRadixSort); done
+
+# seq 1000000 100000 10000000 | shuf
+# In 10^3ns
+# LSD: 131 / 102 / 85 / 103 / 101
+# MSD: 1551 / 1694 / 1610 / 1519 / 1578
+
+# seq mit 10000 je Schritt
+# In 10^3ns
+# LSD: 663 / 648 / 569 / 652 / 673
+# MSD: 6018 / 6087 / 5908 / 5698 / 5760

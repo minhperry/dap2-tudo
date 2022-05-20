@@ -16,21 +16,32 @@ class MSDRadixSort {
 		while (sc.hasNextLine()) {
 			try {
 				int val = Integer.parseInt(sc.nextLine());
+                if (val < 0) {
+                    System.out.println("Negative inputs are not allowed!");
+                    return;
+                }
 				list.add(val);
 			} catch (NumberFormatException e) {
-				System.out.println("Input is not a number!");
+				System.out.println("Input is not a number, or is out of int limit!");
 				return;
 			}
 		}
 
-		// ArrayList in int[] umwandeln
+		//ArrayList in int[] umwandeln
 		int[] array = new int[list.size()];
 		for (int i = 0; i < array.length; i++) {
 			array[i] = list.get(i);
 		}
 
+		System.out.println("Before sorted: " + Arrays.toString(array));
+        Instant start = Instant.now();
 		msdRadix(array);
-		System.out.println("The array: " + Arrays.toString(array));
+        Instant end = Instant.now();
+		System.out.println("After Sorted: " + Arrays.toString(array));
+
+        System.out.println("Time needed: " + Duration.between(start, end).toNanos() + "ns.");
+
+        assert (LSDRadixSort.isSorted(array)) : "Array was not sorted correctly!";
 	}
 
 	// Insertion-Sort für kürze Länge
@@ -57,9 +68,9 @@ class MSDRadixSort {
 		// Für kürze Länge nutzen wir Insertion Sort wie definiert
 		if (r - l + 1 <= 32) {
 			insertionSort(data);
-		}
-
-		else {
+		} else if (b < 0) {
+            return;
+        } else {
 			int[] C = new int[257];
 
 			// wie LSD : Frequenz zählen
@@ -68,24 +79,20 @@ class MSDRadixSort {
 				C[digit]++;
 			}
 
-			// 255-te Element irgendwas????
-			// C[C.length - 2]--;
-
-			// works fine with those excessive edits?!??!?!
-
-			// war original i = c.len - 2 ???
+			C[C.length - 2]--;
 
 			// wie LSD: kummulative Summe 
-			for (int i = C.length - 1; i > 0; i--) {
+			for (int i = C.length - 2; i > 0; i--) {
 				C[i - 1] += C[i];
 			}
 
-			// dann sortieren wir diese Stelle
+			// dann sortieren wir dieses Byte...
 			LSDRadixSort.sortByByte(data, l, r, b);
 
-			// und rekursiv Sortieren für nächste Stelle
-			for (int i = 0; i < C.length - 2; i++) {
-				msdRadix(data, C[i + 1] + 1, C[i], b - 1);
+			// ..und rekursiv Sortieren für nächstes Byte
+			for (int i = 0; i < C.length - 1; i++) {
+				// msdRadix(data, C[i + 1] + 1, C[i], b - 1);
+                msdRadix(data, C[i] + 1, C[i + 1] - 1, b - 1);
 			}
 		}
 

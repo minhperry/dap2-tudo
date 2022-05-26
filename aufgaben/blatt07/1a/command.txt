@@ -1,0 +1,2 @@
+javac BVCorrect.java && java BVCorrect
+javac BVMem.java && java BVMem

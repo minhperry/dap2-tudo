@@ -10,14 +10,14 @@ class RankMem {
     System.out.println("Teste Speicherverbrauch...");
     int input_size = BVUtil.parseLength(args);
     
-    Integer[] C = { 1, 2,
+    Integer C[] = { 1, 2, 
       3, 4, 5, 
       7, 8, 9, 
       15, 16, 17, 
       31, 32, 33,
       63, 64, 65,
-      127, 128, 129
-        };
+      127, 128, 129,
+      1337};
       
     Arrays.sort(C, Collections.reverseOrder());
       

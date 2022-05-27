@@ -157,14 +157,13 @@ class RankCorrect {
     
     System.out.println("Teste rank fuer große Eingaben...");
     System.out.println();
-    int anzahl = 100000;
     for (Integer c : C) {
       input.clear();
-      input.add(BVUtil.uniformBVString(anzahl, 0));
-      input.add(BVUtil.uniformBVString(anzahl, 0.1));
-      input.add(BVUtil.uniformBVString(anzahl, 0.5));
-      input.add(BVUtil.uniformBVString(anzahl, 0.9));
-      input.add(BVUtil.uniformBVString(anzahl, 1));
+      input.add(BVUtil.uniformBVString(1000000, 0));
+      input.add(BVUtil.uniformBVString(1000000, 0.1));
+      input.add(BVUtil.uniformBVString(1000000, 0.5));
+      input.add(BVUtil.uniformBVString(1000000, 0.9));
+      input.add(BVUtil.uniformBVString(1000000, 1));
       
       for (String str : input) {
         bv = BVUtil.BVfromString(str);

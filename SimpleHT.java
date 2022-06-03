@@ -46,10 +46,11 @@ public class SimpleHT<K, V> {
     }
 
     public Integer addressOfList(K key){
+        int code = key.hashCode();
         if(obj != null) {
-            return obj.getHash(key);
+            code = obj.getHash(key);
         }
-        return Math.floorMod(key.hashCode(), c);
+        return Math.floorMod(code, c);
     }
 
     public void insert(K key, V value) {
